@@ -21,40 +21,38 @@ public class StringDinamica {
         carectere(char elementoCaractere) {
             elemento = elementoCaractere;
             proximo = null;
+            anterior = null;
         }
     }
 
     /**
      *
-     * @param list
+     * @param lista
      * @param data
      * @return
      */
-    public static StringDinamica inserirCaractere(StringDinamica list, char data) {
-        // Create a new node with given data
-        System.out.println("Inserindo: %c".formatted(data));
+    public static StringDinamica inserirCaractere(StringDinamica lista, char data) {
+        //Cria um novo caractere com o dado passado por parametro
+//        System.out.println("Inserindo: %c".formatted(data));
         carectere novoCaractere = new carectere(data);
-        // If the Linked List is empty,
-        // then make the new node as head
-        if (list.cabeca == null) {
-            list.cabeca = novoCaractere;
+        //Caso a lista duplamente encadeada seja vazia, ele define como a cabeca
+        if (lista.cabeca == null) {
+            lista.cabeca = novoCaractere;
         } else {
-            // Else traverse till the last node
-            // and insert the new_node there
-            carectere ultimo = list.cabeca;
+            //Caso a lista nao seja vazia, ele percorre ate o ultimo elemento
+            carectere ultimo = lista.cabeca;
             while (ultimo.proximo != null) {
                 ultimo = ultimo.proximo;
             }
-            // Insert the new_node at last node
+            //Redefine os ponteiros para apontar corretamente
             novoCaractere.anterior = ultimo;
             ultimo.proximo = novoCaractere;
         }
-
-        // Return the list by head
-        return list;
+        //Retorna a lista
+        return lista;
     }
 
-    public static String delete(StringDinamica list) {
+    public static void delete(StringDinamica list) {
         carectere ultimo = list.cabeca;
         while (ultimo.proximo != null) {
             ultimo = ultimo.proximo;
@@ -65,7 +63,7 @@ public class StringDinamica {
         } else {
             ultimo.anterior.proximo = null;
         }
-        return getString(list);
+//        return getString(list);
     }
 
     /**

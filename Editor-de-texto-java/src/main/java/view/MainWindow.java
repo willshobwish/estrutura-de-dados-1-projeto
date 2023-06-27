@@ -64,19 +64,20 @@ public class MainWindow extends javax.swing.JFrame {
         TextEditor.getDocument().addDocumentListener(new DocumentListener(){
             @Override
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
-                System.out.println("Texto adicionado: %s".formatted(TextEditor.getText()));
+                System.out.println("Texto adicionado");
                 Controller.getInstance().converterString(TextEditor.getText());
             }
 
             @Override
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
-                System.out.println("Texto removido: %s".formatted(TextEditor.getText()));
-                Controller.getInstance().converterString(TextEditor.getText());
+                System.out.println("Texto removido");
+                Controller.getInstance().apagar(TextEditor.getText());
             }
 
             @Override
             public void changedUpdate(javax.swing.event.DocumentEvent e) {
-                System.out.println("Texto modificado: %s".formatted(TextEditor.getText()));
+                System.out.println("Texto modificado");
+                Controller.getInstance().converterString(TextEditor.getText());
             }
         });
         jScrollPane1.setViewportView(TextEditor);
@@ -174,6 +175,11 @@ public class MainWindow extends javax.swing.JFrame {
         MenuArquivo.add(jMenuItem1);
 
         jMenuItem2.setText("Salvar texto");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         MenuArquivo.add(jMenuItem2);
 
         ButtonLocalizar.setText("Localizar");
@@ -298,7 +304,6 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void ButtonApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonApagarActionPerformed
         // TODO add your handling code here:
-        TextEditor.setText(Controller.getInstance().apagar());
     }//GEN-LAST:event_ButtonApagarActionPerformed
 
     private void ButtonLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLocalizarActionPerformed
@@ -311,6 +316,11 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         new Abrir().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        new Salvar().setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,7 +368,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
     }
-    
+
     public JTextArea getTextEditor() {
         return TextEditor;
     }

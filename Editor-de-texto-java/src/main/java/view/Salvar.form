@@ -48,6 +48,9 @@
           <Connection code="new FileNameExtensionFilter(&quot;Textos planos&quot;, &quot;txt&quot;)" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jFileChooser1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

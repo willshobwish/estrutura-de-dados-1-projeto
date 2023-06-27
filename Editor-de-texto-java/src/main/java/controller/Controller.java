@@ -5,7 +5,9 @@
 package controller;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 import model.StringDinamica;
 import view.MainWindow;
 
@@ -15,11 +17,10 @@ import view.MainWindow;
  */
 public class Controller {
 
-//Padrao MVC, instanciacao de um unico controlador para todo o sistema, isso impede a instanciacao de outros controladores
     private static final Controller controller = new Controller();
-//O controlador possui o objeto string dinamica instanciado
     private static StringDinamica stringDinamica = new StringDinamica();
     private MainWindow mainWindow = new MainWindow();
+    private int quantidadeAnterior = 0;
 
     private Controller() {
         mainWindow.setVisible(true);
@@ -48,10 +49,11 @@ public class Controller {
         char[] caracteres = entrada.toCharArray();
 //      Converte o objeto string para um vetor de caracteres
 //      O for percorre o vetor de char, previamente convertido do objeto string e insere na estrutura de dado "string dinamica"
-        for (int i = 0; i < caracteres.length; i++) {
+        for (int i = quantidadeAnterior; i < caracteres.length; i++) {
 //      O vetor de caracteres eh processado por esse for, atribuindo na estrutura de dados "string dinamica"
             stringDinamica = stringDinamica.inserirCaractere(stringDinamica, caracteres[i]);
         }
+        quantidadeAnterior = entrada.length();
     }
 
     /**
@@ -65,8 +67,9 @@ public class Controller {
         return stringDinamica.getString(stringDinamica);
     }
 
-    public String apagar() {
-        return stringDinamica.delete(stringDinamica);
+    public void apagar(String entrada) {
+        stringDinamica.delete(stringDinamica);
+        quantidadeAnterior = entrada.length();
     }
 
     public void abrirTexto(String caminho) {
@@ -74,11 +77,41 @@ public class Controller {
         try {
             Scanner escaner = new Scanner(arquivo);
             while (escaner.hasNext()) {
-                converterString(escaner.next());
+                converterString(escaner.nextLine());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         mainWindow.getTextEditor().setText(stringDinamica.getString(stringDinamica));
+    }
+
+    public void salvarTexto(String caminho) {
+        File arquivo = new File(caminho + ".txt");
+        try {
+            if (arquivo.createNewFile()) {
+                FileWriter escritor = new FileWriter(arquivo);
+                escritor.write(stringDinamica.getString(stringDinamica));
+                escritor.close();
+                JOptionPane.showMessageDialog(null,
+                        "O arquivo %s foi criado e salvo com sucesso".formatted(arquivo.getName()),
+                        "Arquivo criado e salvo",
+                        JOptionPane.WARNING_MESSAGE);
+            } else {
+                FileWriter escritor = new FileWriter(arquivo);
+                escritor.write(stringDinamica.getString(stringDinamica));
+                escritor.close();
+                JOptionPane.showMessageDialog(null,
+                        "O arquivo %s foi salvo com sucesso".formatted(arquivo.getName()),
+                        "Arquivo salvo",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "Ocorreu um erro ao salvar o arquivo %s".formatted(arquivo.getName()),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+
     }
 }

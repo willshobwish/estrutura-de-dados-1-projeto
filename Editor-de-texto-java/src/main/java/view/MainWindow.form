@@ -21,6 +21,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salvar texto"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ButtonLocalizar">
               <Properties>
@@ -154,7 +157,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="&#xd;&#xa;"/>
-            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="TextEditor.getDocument().addDocumentListener(new DocumentListener(){&#xd;&#xa;            @Override&#xd;&#xa;            public void insertUpdate(javax.swing.event.DocumentEvent e) {&#xd;&#xa;                System.out.println(&quot;Texto adicionado: %s&quot;.formatted(TextEditor.getText()));&#xd;&#xa;                Controller.getInstance().converterString(TextEditor.getText());&#xd;&#xa;            }&#xd;&#xa;&#xd;&#xa;            @Override&#xd;&#xa;            public void removeUpdate(javax.swing.event.DocumentEvent e) {&#xd;&#xa;                System.out.println(&quot;Texto removido: %s&quot;.formatted(TextEditor.getText()));&#xd;&#xa;                Controller.getInstance().converterString(TextEditor.getText());&#xd;&#xa;            }&#xd;&#xa;&#xd;&#xa;            @Override&#xd;&#xa;            public void changedUpdate(javax.swing.event.DocumentEvent e) {&#xd;&#xa;                System.out.println(&quot;Texto modificado: %s&quot;.formatted(TextEditor.getText()));&#xd;&#xa;            }&#xd;&#xa;        });"/>
+            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="TextEditor.getDocument().addDocumentListener(new DocumentListener(){&#xd;&#xa;            @Override&#xd;&#xa;            public void insertUpdate(javax.swing.event.DocumentEvent e) {&#xd;&#xa;                System.out.println(&quot;Texto adicionado&quot;);&#xd;&#xa;                Controller.getInstance().converterString(TextEditor.getText());&#xd;&#xa;            }&#xd;&#xa;&#xd;&#xa;            @Override&#xd;&#xa;            public void removeUpdate(javax.swing.event.DocumentEvent e) {&#xd;&#xa;                System.out.println(&quot;Texto removido&quot;);&#xd;&#xa;                Controller.getInstance().apagar(TextEditor.getText());&#xd;&#xa;            }&#xd;&#xa;&#xd;&#xa;            @Override&#xd;&#xa;            public void changedUpdate(javax.swing.event.DocumentEvent e) {&#xd;&#xa;                System.out.println(&quot;Texto modificado&quot;);&#xd;&#xa;                Controller.getInstance().converterString(TextEditor.getText());&#xd;&#xa;            }&#xd;&#xa;        });"/>
           </AuxValues>
         </Component>
       </SubComponents>
