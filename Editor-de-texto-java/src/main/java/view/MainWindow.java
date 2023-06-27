@@ -6,20 +6,20 @@ package view;
 
 import controller.Controller;
 import java.awt.event.KeyEvent;
-import javax.swing.JOptionPane;
-import javax.swing.JRootPane;
-import model.StringDinamica;
+import javax.swing.JTextArea;
+import javax.swing.event.DocumentListener;
+import org.w3c.dom.events.DocumentEvent;
 
 /**
  *
  * @author Willian
  */
-public class Main extends javax.swing.JFrame {
+public class MainWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form Window
      */
-    public Main() {
+    public MainWindow() {
         initComponents();
     }
 
@@ -34,6 +34,7 @@ public class Main extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         TextEditor = new javax.swing.JTextArea();
+
         TextFieldEditor = new javax.swing.JTextField();
         ButtonInserir = new javax.swing.JButton();
         ButtonApagar = new javax.swing.JButton();
@@ -47,6 +48,8 @@ public class Main extends javax.swing.JFrame {
         CheckQuebraLinhaEnter = new javax.swing.JCheckBox();
         Menu = new javax.swing.JMenuBar();
         MenuArquivo = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         ButtonLocalizar = new javax.swing.JMenuItem();
         ButtonSair = new javax.swing.JMenuItem();
         MenuSobre = new javax.swing.JMenu();
@@ -55,10 +58,27 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Editor de texto");
 
-        TextEditor.setEditable(false);
         TextEditor.setColumns(20);
         TextEditor.setLineWrap(true);
         TextEditor.setRows(5);
+        TextEditor.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                System.out.println("Texto adicionado: %s".formatted(TextEditor.getText()));
+                Controller.getInstance().converterString(TextEditor.getText());
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                System.out.println("Texto removido: %s".formatted(TextEditor.getText()));
+                Controller.getInstance().converterString(TextEditor.getText());
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                System.out.println("Texto modificado: %s".formatted(TextEditor.getText()));
+            }
+        });
         jScrollPane1.setViewportView(TextEditor);
 
         TextFieldEditor.setToolTipText("Aperte enter para inserir o texto");
@@ -81,6 +101,11 @@ public class Main extends javax.swing.JFrame {
         });
 
         ButtonApagar.setText("Apagar");
+        ButtonApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonApagarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Automatização");
 
@@ -139,6 +164,17 @@ public class Main extends javax.swing.JFrame {
         );
 
         MenuArquivo.setText("Arquivo");
+
+        jMenuItem1.setText("Abrir texto");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        MenuArquivo.add(jMenuItem1);
+
+        jMenuItem2.setText("Salvar texto");
+        MenuArquivo.add(jMenuItem2);
 
         ButtonLocalizar.setText("Localizar");
         ButtonLocalizar.addActionListener(new java.awt.event.ActionListener() {
@@ -228,12 +264,6 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextFieldEditorActionPerformed
 
-    private void ButtonLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLocalizarActionPerformed
-        // TODO add your handling code here:
-        Localizar localizar = new Localizar();
-        localizar.setVisible(true);
-    }//GEN-LAST:event_ButtonLocalizarActionPerformed
-
     private void ButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSairActionPerformed
         // TODO add your handling code here:
         dispose();
@@ -246,25 +276,41 @@ public class Main extends javax.swing.JFrame {
 
     private void ButtonInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonInserirActionPerformed
         // TODO add your handling code here:
-        Controller.getInstance().converterString(TextFieldEditor.getText(), CheckInserirEspaco.isSelected(), CheckQuebraDeLinha.isSelected());
-        TextEditor.setText(Controller.getInstance().imprime());
-        TextFieldEditor.setText("");
+//        Controller.getInstance().converterString(TextFieldEditor.getText(), CheckInserirEspaco.isSelected(), CheckQuebraDeLinha.isSelected());
+//        TextEditor.setText(Controller.getInstance().imprime());
+//        TextFieldEditor.setText("");
     }//GEN-LAST:event_ButtonInserirActionPerformed
 
     private void TextFieldEditorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextFieldEditorKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            Controller.getInstance().converterString(TextFieldEditor.getText(), CheckInserirEspaco.isSelected(), CheckQuebraLinhaEnter.isSelected());
-            TextEditor.setText(Controller.getInstance().imprime());
-            TextFieldEditor.setText("");
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            Controller.getInstance().converterString(TextFieldEditor.getText(), CheckInserirEspaco.isSelected(), CheckQuebraLinhaEnter.isSelected());
+//            TextEditor.setText(Controller.getInstance().imprime());
+//            TextFieldEditor.setText("");
 
-        }
+//    }
 //        TextEditor.setText(Controller.getInstance().imprime());
     }//GEN-LAST:event_TextFieldEditorKeyPressed
 
     private void CheckQuebraLinhaEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckQuebraLinhaEnterActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CheckQuebraLinhaEnterActionPerformed
+
+    private void ButtonApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonApagarActionPerformed
+        // TODO add your handling code here:
+        TextEditor.setText(Controller.getInstance().apagar());
+    }//GEN-LAST:event_ButtonApagarActionPerformed
+
+    private void ButtonLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLocalizarActionPerformed
+        // TODO add your handling code here:
+        Localizar localizar = new Localizar();
+        localizar.setVisible(true);
+    }//GEN-LAST:event_ButtonLocalizarActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        new Abrir().setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,39 +326,45 @@ public class Main extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                new MainWindow().setVisible(true);
+
             }
         });
-        System.out.println("""
-                           Estrutura de dados 1
-                           Trabalho semestral da disciplina
-                           Editor de texto em Java com estrutura de dados para formar strings
-                           """);
-        System.out.println("Criado");
-        StringDinamica dinamica = new StringDinamica();
-        dinamica.insert(dinamica, 'a');
-        dinamica.insert(dinamica, 'b');
-        dinamica.insert(dinamica, 'c');
-        dinamica.insert(dinamica, 'd');
-        dinamica.insert(dinamica, 'e');
-        dinamica.getString(dinamica);
+    }
+    
+    public JTextArea getTextEditor() {
+        return TextEditor;
+    }
+
+    public void setTextEditor(JTextArea TextEditor) {
+        this.TextEditor = TextEditor;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -332,6 +384,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

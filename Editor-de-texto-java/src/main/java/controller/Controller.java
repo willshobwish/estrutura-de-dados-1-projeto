@@ -4,7 +4,10 @@
  */
 package controller;
 
+import java.io.File;
+import java.util.Scanner;
 import model.StringDinamica;
+import view.MainWindow;
 
 /**
  *
@@ -16,8 +19,10 @@ public class Controller {
     private static final Controller controller = new Controller();
 //O controlador possui o objeto string dinamica instanciado
     private static StringDinamica stringDinamica = new StringDinamica();
+    private MainWindow mainWindow = new MainWindow();
 
     private Controller() {
+        mainWindow.setVisible(true);
     }
 
     /**
@@ -39,21 +44,13 @@ public class Controller {
      * @param quebraDeLinha booleano para verificar a adicao de quebra de linha
      * entre as insercoes
      */
-    public void converterString(String entrada, boolean espaco, boolean quebraDeLinha) {
+    public void converterString(String entrada) {
         char[] caracteres = entrada.toCharArray();
-//Converte o objeto string para um vetor de caracteres
-//O for percorre o vetor de char, previamente convertido do objeto string e insere na estrutura de dado "string dinamica"
+//      Converte o objeto string para um vetor de caracteres
+//      O for percorre o vetor de char, previamente convertido do objeto string e insere na estrutura de dado "string dinamica"
         for (int i = 0; i < caracteres.length; i++) {
-//            O vetor de caracteres eh processado por esse for, atribuindo na estrutura de dados "string dinamica"
-            stringDinamica = stringDinamica.insert(stringDinamica, caracteres[i]);
-        }
-//       Caso seja necessario adicionar espaco entre as insercoes
-        if (espaco) {
-            stringDinamica = stringDinamica.insert(stringDinamica, ' ');
-        }
-//        Caso seja necessario adicionar quebra de linha entre as insercoes
-        if (quebraDeLinha) {
-            stringDinamica = stringDinamica.insert(stringDinamica, '\n');
+//      O vetor de caracteres eh processado por esse for, atribuindo na estrutura de dados "string dinamica"
+            stringDinamica = stringDinamica.inserirCaractere(stringDinamica, caracteres[i]);
         }
     }
 
@@ -66,5 +63,22 @@ public class Controller {
      */
     public String imprime() {
         return stringDinamica.getString(stringDinamica);
+    }
+
+    public String apagar() {
+        return stringDinamica.delete(stringDinamica);
+    }
+
+    public void abrirTexto(String caminho) {
+        File arquivo = new File(caminho);
+        try {
+            Scanner escaner = new Scanner(arquivo);
+            while (escaner.hasNext()) {
+                converterString(escaner.next());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mainWindow.getTextEditor().setText(stringDinamica.getString(stringDinamica));
     }
 }

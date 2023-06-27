@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="Menu">
       <SubComponents>
@@ -9,6 +9,19 @@
             <Property name="text" type="java.lang.String" value="Arquivo"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Abrir texto"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Salvar texto"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ButtonLocalizar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Localizar"/>
@@ -135,11 +148,14 @@
       <SubComponents>
         <Component class="javax.swing.JTextArea" name="TextEditor">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="&#xd;&#xa;"/>
+            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="TextEditor.getDocument().addDocumentListener(new DocumentListener(){&#xd;&#xa;            @Override&#xd;&#xa;            public void insertUpdate(javax.swing.event.DocumentEvent e) {&#xd;&#xa;                System.out.println(&quot;Texto adicionado: %s&quot;.formatted(TextEditor.getText()));&#xd;&#xa;                Controller.getInstance().converterString(TextEditor.getText());&#xd;&#xa;            }&#xd;&#xa;&#xd;&#xa;            @Override&#xd;&#xa;            public void removeUpdate(javax.swing.event.DocumentEvent e) {&#xd;&#xa;                System.out.println(&quot;Texto removido: %s&quot;.formatted(TextEditor.getText()));&#xd;&#xa;                Controller.getInstance().converterString(TextEditor.getText());&#xd;&#xa;            }&#xd;&#xa;&#xd;&#xa;            @Override&#xd;&#xa;            public void changedUpdate(javax.swing.event.DocumentEvent e) {&#xd;&#xa;                System.out.println(&quot;Texto modificado: %s&quot;.formatted(TextEditor.getText()));&#xd;&#xa;            }&#xd;&#xa;        });"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -164,6 +180,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Apagar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonApagarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
