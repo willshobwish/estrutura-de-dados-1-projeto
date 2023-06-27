@@ -53,6 +53,10 @@ public class Controller {
 //      O vetor de caracteres eh processado por esse for, atribuindo na estrutura de dados "string dinamica"
             stringDinamica = stringDinamica.inserirCaractere(stringDinamica, caracteres[i]);
         }
+        System.out.println("""
+                           Texto: %s
+                           Index: %d
+                           """.formatted(stringDinamica.getString(stringDinamica), quantidadeAnterior));
         quantidadeAnterior = entrada.length();
     }
 
@@ -69,6 +73,10 @@ public class Controller {
 
     public void apagar(String entrada) {
         stringDinamica.delete(stringDinamica);
+        System.out.println("""
+                           Texto: %s
+                           Index: %d
+                           """.formatted(stringDinamica.getString(stringDinamica), quantidadeAnterior));
         quantidadeAnterior = entrada.length();
     }
 

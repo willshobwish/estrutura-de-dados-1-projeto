@@ -38,6 +38,8 @@ public class StringDinamica {
         //Caso a lista duplamente encadeada seja vazia, ele define como a cabeca
         if (lista.cabeca == null) {
             lista.cabeca = novoCaractere;
+        } else if (lista.cabeca.elemento == Character.MIN_VALUE) {
+            lista.cabeca.elemento = data;
         } else {
             //Caso a lista nao seja vazia, ele percorre ate o ultimo elemento
             carectere ultimo = lista.cabeca;

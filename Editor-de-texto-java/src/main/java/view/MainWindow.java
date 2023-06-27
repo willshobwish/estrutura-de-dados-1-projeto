@@ -5,10 +5,8 @@
 package view;
 
 import controller.Controller;
-import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
 import javax.swing.event.DocumentListener;
-import org.w3c.dom.events.DocumentEvent;
 
 /**
  *
